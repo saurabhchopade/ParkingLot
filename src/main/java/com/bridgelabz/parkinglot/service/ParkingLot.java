@@ -17,6 +17,7 @@ public class ParkingLot {
     public void park(Object vehicle) throws ParkingLotException {
         if (parkingLotData.size() == parkingLotCapacity) {
             StatusObserver.OWNER.isParkingFull = true;
+            StatusObserver.AIRPORT_SECURITY.isParkingFull = true;
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
         vehicleStatus(true);
