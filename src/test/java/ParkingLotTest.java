@@ -1,3 +1,4 @@
+import com.bridgelabz.parkinglot.enums.StatusObserver;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.service.ParkingLot;
 import org.junit.Assert;
@@ -46,6 +47,18 @@ public class ParkingLotTest {
             Object anotherVehicle = new Object();
             parkingLot.park(anotherVehicle);
         } catch (ParkingLotException e) {
+            Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
+        }
+    }
+
+    @Test
+    public void givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException() throws ParkingLotException {
+        try {
+            parkingLot.park(vehicle);
+            Object anotherVehicle = new Object();
+            parkingLot.park(anotherVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(true, StatusObserver.OWNER.isParkingFull);
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
         }
     }
