@@ -62,6 +62,18 @@ public class ParkingLotTest {
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
         }
     }
+
+    @Test
+    public void givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException() throws ParkingLotException {
+        try {
+            parkingLot.park(vehicle);
+            Object anotherVehicle = new Object();
+            parkingLot.park(anotherVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(true, StatusObserver.AIRPORT_SECURITY.isParkingFull);
+            Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
+        }
+    }
 }
 
 
