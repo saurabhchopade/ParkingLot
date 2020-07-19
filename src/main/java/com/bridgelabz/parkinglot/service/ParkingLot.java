@@ -1,4 +1,5 @@
 package com.bridgelabz.parkinglot.service;
+import com.bridgelabz.parkinglot.enums.StatusObserver;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
 
@@ -15,6 +16,7 @@ public class ParkingLot {
 
     public void park(Object vehicle) throws ParkingLotException {
         if (parkingLotData.size() == parkingLotCapacity) {
+            StatusObserver.OWNER.isParkingFull = true;
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
         vehicleStatus(true);
