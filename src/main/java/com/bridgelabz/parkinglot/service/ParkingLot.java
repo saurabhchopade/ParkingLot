@@ -1,12 +1,36 @@
 package com.bridgelabz.parkinglot.service;
-public class ParkingLot {
-    public Object vehicle;
+import com.bridgelabz.parkinglot.enums.StatusObserver;
+import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
 
-    public boolean park(Object vehicle) {
-        return true;
+import java.util.ArrayList;
+import java.util.List;
+public class ParkingLot {
+    private int parkingLotCapacity;
+    public static boolean status;
+    List parkingLotData = new ArrayList();
+
+    public ParkingLot(int parkingLotCapacity) {
+        this.parkingLotCapacity = parkingLotCapacity;
     }
 
-    public boolean UnPark(Object vehicle) {
-        return true;
+    public void park(Object vehicle) throws ParkingLotException {
+        if (parkingLotData.size() == parkingLotCapacity) {
+            StatusObserver.OWNER.isParkingFull = true;
+            throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
+        }
+        vehicleStatus(true);
+        parkingLotData.add(vehicle);
+    }
+
+    public void UnPark(Object vehicle) throws ParkingLotException {
+        if (parkingLotData.contains(vehicle)) {
+            vehicleStatus(false);
+        }
+        throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
+    }
+
+    public boolean vehicleStatus(boolean status) {
+        return this.status = status;
     }
 }
