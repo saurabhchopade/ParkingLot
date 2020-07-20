@@ -99,6 +99,13 @@ public class ParkingLotTest {
             Assert.assertFalse(ParkingOwnerImpl.status);
         }
     }
+
+    @Test
+    public void givenVehicle_OnBasisOfVehicle_ShouldReturnSlotNo() throws ParkingLotException {
+        parkingLot.park(firstVehicle);
+        int lotNum = parkingLot.allocateLotNo(secondVehicle);
+        Assert.assertEquals(1, lotNum);
+    }
 }
 
 

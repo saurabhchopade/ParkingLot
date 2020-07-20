@@ -5,14 +5,15 @@ import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 public class ParkingLot {
+    Map<Object, Integer> parkingLotData = new HashMap<>();
     private final int parkingLotCapacity;
     public static boolean status;
+    public static int lotNo = 1;
     public ParkingOwnerImpl parkingOwner = new ParkingOwnerImpl();
     public AirportSecurityImpl airportSecurity = new AirportSecurityImpl();
-    public List parkingLotData = new ArrayList();
     ParkingLotObserver parkingLotObserver = new ParkingLotObserver();
 
     public ParkingLot(int parkingLotCapacity) {
@@ -22,7 +23,7 @@ public class ParkingLot {
     }
 
     public void park(Object vehicle) throws ParkingLotException {
-        if (parkingLotData.contains(vehicle)) {
+        if (parkingLotData.containsKey(vehicle)) {
             throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
         }
         if (parkingLotData.size() == parkingLotCapacity) {
@@ -30,11 +31,11 @@ public class ParkingLot {
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
         vehicleStatus(true);
-        parkingLotData.add(vehicle);
+        parkingLotData.put(vehicle, lotNo);
     }
 
     public void UnPark(Object vehicle) throws ParkingLotException {
-        if (!parkingLotData.contains(vehicle)) {
+        if (!parkingLotData.containsKey(vehicle)) {
             throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
         }
         parkingLotObserver.notificationUpdate(false);
@@ -44,4 +45,10 @@ public class ParkingLot {
     public void vehicleStatus(boolean status) {
         ParkingLot.status = status;
     }
+
+    public int allocateLotNo(Object vehicle) {
+        return parkingLotData.entrySet().stream().filter(entry -> !vehicle.equals(entry.getKey())).findFirst()
+                .map(Map.Entry::getValue).orElse(0);
+    }
 }
+
