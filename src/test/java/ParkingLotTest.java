@@ -1,11 +1,10 @@
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
+import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 import com.bridgelabz.parkinglot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static com.bridgelabz.parkinglot.enums.StatusObserver.AIRPORT_SECURITY;
-import static com.bridgelabz.parkinglot.enums.StatusObserver.PARKING_LOT_OWNER;
 public class ParkingLotTest {
     Object firstVehicle;
     Object secondVehicle;
@@ -62,7 +61,7 @@ public class ParkingLotTest {
             Object anotherVehicle = new Object();
             parkingLot.park(anotherVehicle);
         } catch (ParkingLotException e) {
-            Assert.assertTrue(PARKING_LOT_OWNER.isParkingFull);
+            Assert.assertTrue(ParkingOwnerImpl.status);
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
         }
     }
@@ -84,7 +83,7 @@ public class ParkingLotTest {
             Object anotherVehicle = new Object();
             parkingLot.park(anotherVehicle);
         } catch (ParkingLotException e) {
-            Assert.assertTrue(AIRPORT_SECURITY.isParkingFull);
+            Assert.assertTrue(AirportSecurityImpl.status);
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
         }
     }
@@ -97,7 +96,7 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
             parkingLot.UnPark(firstVehicle);
-            Assert.assertFalse(PARKING_LOT_OWNER.isParkingFull);
+            Assert.assertFalse(ParkingOwnerImpl.status);
         }
     }
 }
