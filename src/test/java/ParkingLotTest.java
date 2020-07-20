@@ -6,12 +6,14 @@ import org.junit.Before;
 import org.junit.Test;
 public class ParkingLotTest {
     Object vehicle;
+    Object anotherVehicle;
     ParkingLot parkingLot;
 
     @Before
     public void setUp() {
         new Object();
         parkingLot = new ParkingLot(1);
+        anotherVehicle = new Object();
     }
 
     @Test
@@ -41,7 +43,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_IfParkingLotIsFull_ShouldHandleException() throws ParkingLotException {
+    public void givenVehicle_IfParkingLotIsFull_ShouldHandleException() {
         try {
             parkingLot.park(vehicle);
             Object anotherVehicle = new Object();
@@ -52,7 +54,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException() throws ParkingLotException {
+    public void givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException() {
         try {
             parkingLot.park(vehicle);
             Object anotherVehicle = new Object();
@@ -64,13 +66,25 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException() throws ParkingLotException {
+    public void givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException() {
         try {
             parkingLot.park(vehicle);
             Object anotherVehicle = new Object();
             parkingLot.park(anotherVehicle);
         } catch (ParkingLotException e) {
             Assert.assertEquals(true, StatusObserver.AIRPORT_SECURITY.isParkingFull);
+            Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
+        }
+    }
+
+    @Test
+    public void givenVehicle_IfParkingLotNowAvailable_ShouldReturnFalse() throws ParkingLotException {
+        try {
+            parkingLot.park(vehicle);
+            parkingLot.park(anotherVehicle);
+        } catch (ParkingLotException e) {
+            parkingLot.UnPark(vehicle);
+            Assert.assertEquals(false, StatusObserver.OWNER.isParkingFull);
             Assert.assertEquals(ParkingLotException.ExceptionType.PARKING_LOT_IS_FULL, e.type);
         }
     }
