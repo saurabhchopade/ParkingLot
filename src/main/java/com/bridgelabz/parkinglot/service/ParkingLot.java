@@ -25,10 +25,11 @@ public class ParkingLot {
     }
 
     public void UnPark(Object vehicle) throws ParkingLotException {
-        if (parkingLotData.contains(vehicle)) {
-            vehicleStatus(false);
+        if (!parkingLotData.contains(vehicle)) {
+            throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
         }
-        throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
+        StatusObserver.OWNER.isParkingFull = false;
+        vehicleStatus(false);
     }
 
     public boolean vehicleStatus(boolean status) {
