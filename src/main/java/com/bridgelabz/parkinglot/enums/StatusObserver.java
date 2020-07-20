@@ -1,6 +1,6 @@
 package com.bridgelabz.parkinglot.enums;
 public enum StatusObserver {
-    OWNER(false), AIRPORT_SECURITY(false);
+    PARKING_LOT_OWNER(false), AIRPORT_SECURITY(false);
     public boolean isParkingFull;
 
 

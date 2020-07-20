@@ -6,7 +6,7 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
 import java.util.ArrayList;
 import java.util.List;
 public class ParkingLot {
-    private int parkingLotCapacity;
+    private final int parkingLotCapacity;
     public static boolean status;
     List parkingLotData = new ArrayList();
 
@@ -15,8 +15,11 @@ public class ParkingLot {
     }
 
     public void park(Object vehicle) throws ParkingLotException {
+        if (parkingLotData.contains(vehicle)) {
+            throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
+        }
         if (parkingLotData.size() == parkingLotCapacity) {
-            StatusObserver.OWNER.isParkingFull = true;
+            StatusObserver.PARKING_LOT_OWNER.isParkingFull = true;
             StatusObserver.AIRPORT_SECURITY.isParkingFull = true;
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
@@ -28,7 +31,7 @@ public class ParkingLot {
         if (!parkingLotData.contains(vehicle)) {
             throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
         }
-        StatusObserver.OWNER.isParkingFull = false;
+        StatusObserver.PARKING_LOT_OWNER.isParkingFull = false;
         vehicleStatus(false);
     }
 
