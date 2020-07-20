@@ -7,6 +7,7 @@ import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 public class ParkingLot {
     Map<Object, Integer> parkingLotData = new HashMap<>();
     private final int parkingLotCapacity;
@@ -46,9 +47,21 @@ public class ParkingLot {
         ParkingLot.status = status;
     }
 
-    public int allocateLotNo(Object vehicle) {
-        return parkingLotData.entrySet().stream().filter(entry -> !vehicle.equals(entry.getKey())).findFirst()
-                .map(Map.Entry::getValue).orElse(0);
+    public int allocateLotNo(Object vehicle) throws ParkingLotException {
+        if (!this.parkingLotData.containsKey(vehicle)) {
+            return parkingLotData.entrySet().stream().filter(entry -> !Objects.equals(vehicle, entry.getKey()))
+                    .findFirst().map(Map.Entry::getValue).orElse(0);
+        }
+        throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "Vehicle already present");
+    }
+
+    public int isMyVehiclePresent(Object vehicle) throws ParkingLotException {
+        if (this.parkingLotData.containsKey(vehicle)) {
+            return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(vehicle, entry.getKey()))
+                    .findFirst().map(Map.Entry::getValue).orElse(0);
+        }
+        throw new ParkingLotException(ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
 }
+
 
