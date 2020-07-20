@@ -14,6 +14,7 @@ public class ParkingLotTest {
     public void setUp() {
         new Object();
         parkingLot = new ParkingLot(1);
+        firstVehicle = new Object();
         secondVehicle = new Object();
     }
 
@@ -101,10 +102,40 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_OnBasisOfVehicle_ShouldReturnSlotNo() throws ParkingLotException {
+    public void givenVehicle_OnBasisOfVehicleType_ShouldReturnParkingLotNumberNo() throws ParkingLotException {
         parkingLot.park(firstVehicle);
         int lotNum = parkingLot.allocateLotNo(secondVehicle);
         Assert.assertEquals(1, lotNum);
+    }
+
+    @Test
+    public void givenVehicle_AlreadyParkedAndWantsToAllocateLot_ShouldHandleException() {
+        try {
+            parkingLot.park(secondVehicle);
+            parkingLot.allocateLotNo(secondVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED, e.type);
+        }
+    }
+
+    @Test
+    public void givenVehicle_CheckVehiclePresentOrNotIfParked_ShouldReturnParkingLotNumber() {
+        try {
+            parkingLot.park(firstVehicle);
+            int lotNo = parkingLot.isMyVehiclePresent(firstVehicle);
+            Assert.assertEquals(1, lotNo);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, e.type);
+        }
+    }
+
+    @Test
+    public void givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException() {
+        try {
+            parkingLot.isMyVehiclePresent(firstVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, e.type);
+        }
     }
 }
 
