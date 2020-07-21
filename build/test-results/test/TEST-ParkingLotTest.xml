@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-07-20T22:00:33" hostname="saurabh3250" time="6.873">
+<testsuite name="ParkingLotTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2020-07-21T05:12:55" hostname="saurabh3250" time="0.023">
   <properties/>
-  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException" classname="ParkingLotTest" time="6.873">
-    <skipped/>
-  </testcase>
+  <testcase name="givenAVehicle_IfNotPresentAndWantToUnParke_ShouldHandleException" classname="ParkingLotTest" time="0.005"/>
+  <testcase name="givenVehicle_IfAlreadyPresent_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfParked_ShouldReturnParkingLotNumber" classname="ParkingLotTest" time="0.003"/>
+  <testcase name="givenVehicle_IfParkingLotIsFull_ShouldHandleException" classname="ParkingLotTest" time="0.002"/>
+  <testcase name="givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_IfParkingLotNowAvailable_ShouldReturnFalse" classname="ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_AlreadyParkedAndWantsToAllocateLot_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
+  <testcase name="givenVehicle_OnBasisOfVehicleType_ShouldReturnParkingLotNumberNo" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenAVehicle_IfParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
+  <testcase name="givenAVehicle_IfUnParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -58,7 +58,7 @@ public class ParkingLot {
     public int isMyVehiclePresent(Object vehicle) throws ParkingLotException {
         if (this.parkingLotData.containsKey(vehicle)) {
             return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(vehicle, entry.getKey()))
-                    .findFirst().map(Map.Entry::getValue).orElse(0);
+                    .findAny().map(Map.Entry::getValue).orElse(0);
         }
         throw new ParkingLotException(ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
