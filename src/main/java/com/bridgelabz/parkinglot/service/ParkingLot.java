@@ -11,15 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 public class ParkingLot {
     Map<Integer, VehicleDetails> parkingLotData = new HashMap<>();
-    private final int parkingLotCapacity;
+    private final int TOTAL_PARKING_LOT_CAPACITY;
+    private final int TOTAL_LOTS;
+    private final int SINGLE_LOT_CAPACITY;
     public static boolean status;
     public static Integer lotNo = 1;
     public ParkingOwnerImpl parkingOwner = new ParkingOwnerImpl();
     public AirportSecurityImpl airportSecurity = new AirportSecurityImpl();
     ParkingLotObserver parkingLotObserver = new ParkingLotObserver();
 
-    public ParkingLot(int parkingLotCapacity) {
-        this.parkingLotCapacity = parkingLotCapacity;
+    public ParkingLot(int parkingLotCapacity, int noOfLots) {
+        this.TOTAL_LOTS = noOfLots;
+        this.TOTAL_PARKING_LOT_CAPACITY = parkingLotCapacity * noOfLots;
+        this.SINGLE_LOT_CAPACITY = parkingLotCapacity;
         parkingLotObserver.addIntoViewerList(parkingOwner);
         parkingLotObserver.addIntoViewerList(airportSecurity);
     }
@@ -28,12 +32,11 @@ public class ParkingLot {
         if (this.checkPresent(vehicle)) {
             throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
         }
-        if (parkingLotData.size() == parkingLotCapacity) {
+        if (parkingLotData.size() == TOTAL_PARKING_LOT_CAPACITY) {
             parkingLotObserver.notificationUpdate(true);
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
-        parkingLotData.put(lotNo, vehicle);
-        lotNo++;
+        this.allocateLotNo(vehicle);
         vehicleStatus(true);
     }
 
@@ -55,18 +58,27 @@ public class ParkingLot {
         ParkingLot.status = status;
     }
 
-    public int allocateLotNo(String vehicleNumber) throws ParkingLotException {
-        for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber == vehicleNumber) {
-                throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "Vehicle already present");
+    public void allocateLotNo(VehicleDetails vehicle) throws ParkingLotException {
+        if (this.checkPresent(vehicle)) {
+            throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
+        }
+        int start = SINGLE_LOT_CAPACITY * lotNo - TOTAL_PARKING_LOT_CAPACITY - 1;
+        int previousLengthOfMap = parkingLotData.size();
+        for (int key = start; key < SINGLE_LOT_CAPACITY * lotNo; key++) {
+            parkingLotData.putIfAbsent(key, vehicle);
+            if (parkingLotData.size() > previousLengthOfMap) {
+                lotNo++;
+                break;
             }
         }
-        return lotNo + 1;
+        if (lotNo == TOTAL_LOTS + 1) {
+            lotNo = 1;
+        }
     }
 
     public boolean isMyVehiclePresent(String vehicleNumber) throws ParkingLotException {
         for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber == vehicleNumber) {
+            if (t.vehicleNumber.equals(vehicleNumber)) {
                 return true;
             }
         }
@@ -75,7 +87,7 @@ public class ParkingLot {
 
     public boolean checkPresent(VehicleDetails vehicle) {
         for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber == vehicle.vehicleNumber) {
+            if (t.vehicleNumber.equals(vehicle.vehicleNumber)) {
                 return true;
             }
         }
@@ -84,7 +96,7 @@ public class ParkingLot {
 
     public LocalTime giveVehicleParkingTiming(String givenCarName) throws ParkingLotException {
         for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber == givenCarName) {
+            if (t.vehicleNumber.equals(givenCarName)) {
                 return t.vehicleParkingTime;
             }
         }
