@@ -5,6 +5,7 @@ import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public class ParkingLot {
     public int isMyVehiclePresent(Object vehicle) throws ParkingLotException {
         if (this.parkingLotData.containsKey(vehicle)) {
             return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(vehicle, entry.getKey()))
-                    .findFirst().map(Map.Entry::getValue).orElse(0);
+                    .findAny().map(Map.Entry::getValue).orElse(0);
         }
         throw new ParkingLotException(ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
