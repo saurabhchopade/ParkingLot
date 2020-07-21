@@ -5,6 +5,7 @@ import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

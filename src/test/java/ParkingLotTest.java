@@ -5,6 +5,8 @@ import com.bridgelabz.parkinglot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
 public class ParkingLotTest {
     Object firstVehicle;
     Object secondVehicle;
@@ -102,9 +104,10 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_OnBasisOfVehicleType_ShouldReturnParkingLotNumberNo() throws ParkingLotException {
+    public void givenVehicle_IfSpaceIsAvailable_ShouldReturnParkingLotNumberNo() throws ParkingLotException {
         parkingLot.park(firstVehicle);
         int lotNum = parkingLot.allocateLotNo(secondVehicle);
+        parkingLot.park(secondVehicle);
         Assert.assertEquals(1, lotNum);
     }
 
