@@ -1,4 +1,5 @@
 package com.bridgelabz.parkinglot.service;
+import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
 import com.bridgelabz.parkinglot.model.VehicleDetails;
@@ -14,11 +15,9 @@ public class ParkingLot {
     public final int TOTAL_PARKING_LOT_CAPACITY;
     private final int TOTAL_LOTS;
     private final int SINGLE_LOT_CAPACITY;
-    private int singleLotCapacity;
+    private final int singleLotCapacity;
     public static boolean status;
     private static Integer lotNo = 1;
-    private ParkingOwnerImpl parkingOwner = new ParkingOwnerImpl();
-    private AirportSecurityImpl airportSecurity = new AirportSecurityImpl();
     ParkingLotObserver parkingLotObserver = new ParkingLotObserver();
 
     public ParkingLot(int parkingLotCapacity, int noOfLots) {
@@ -26,7 +25,9 @@ public class ParkingLot {
         this.TOTAL_PARKING_LOT_CAPACITY = parkingLotCapacity * noOfLots;
         this.SINGLE_LOT_CAPACITY = parkingLotCapacity;
         this.singleLotCapacity = parkingLotCapacity;
+        ParkingOwnerImpl parkingOwner = new ParkingOwnerImpl();
         parkingLotObserver.addIntoViewerList(parkingOwner);
+        AirportSecurityImpl airportSecurity = new AirportSecurityImpl();
         parkingLotObserver.addIntoViewerList(airportSecurity);
     }
 
@@ -43,12 +44,11 @@ public class ParkingLot {
     }
 
     public void unPark(String vehicle) throws ParkingLotException {
-        if (isMyVehiclePresent(vehicle)) {
-        }
+        isMyVehiclePresent(vehicle);
         int counter = 0;
         for (VehicleDetails t : parkingLotData.values()) {
             counter++;
-            if (t.vehicleNumber == vehicle) {
+            if (t.vehicleNumber.equals(vehicle)) {
                 parkingLotData.remove(counter);
                 parkingLotObserver.notificationUpdate(false);
                 vehicleStatus(false);
@@ -65,8 +65,19 @@ public class ParkingLot {
         if (this.checkPresent(vehicle)) {
             throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
         }
-        int lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (singleLotCapacity - 1);
-        for (int key = lotStarted; key < SINGLE_LOT_CAPACITY * lotNo; key++) {
+        int lotStarted;
+        int lotEnded;
+        switch (vehicle.driverType) {
+            case HANDICAP_DRIVER:
+                lotStarted = 1;
+                lotEnded = TOTAL_PARKING_LOT_CAPACITY;
+                break;
+            default:
+                lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (singleLotCapacity - 1);
+                lotEnded = SINGLE_LOT_CAPACITY * lotNo;
+                break;
+        }
+        for (int key = lotStarted; key < lotEnded; key++) {
             if (!parkingLotData.containsKey(key)) {
                 this.parkThroughWarden(key, vehicle);
                 break;
@@ -76,7 +87,9 @@ public class ParkingLot {
 
     private void parkThroughWarden(int key, VehicleDetails vehicle) {
         parkingLotData.putIfAbsent(key, vehicle);
-        lotNo++;
+        if (vehicle.driverType == DriverType.NON_HANDICAP_DRIVER) {
+            lotNo++;
+        }
         if (lotNo == TOTAL_LOTS + 1) {
             lotNo = 1;
         }
