@@ -67,15 +67,12 @@ public class ParkingLot {
         }
         int lotStarted;
         int lotEnded;
-        switch (vehicle.driverType) {
-            case HANDICAP_DRIVER:
-                lotStarted = 1;
-                lotEnded = TOTAL_PARKING_LOT_CAPACITY;
-                break;
-            default:
-                lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (singleLotCapacity - 1);
-                lotEnded = SINGLE_LOT_CAPACITY * lotNo;
-                break;
+        if (vehicle.driverType == DriverType.HANDICAP_DRIVER) {
+            lotStarted = 1;
+            lotEnded = TOTAL_PARKING_LOT_CAPACITY;
+        } else {
+            lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (singleLotCapacity - 1);
+            lotEnded = SINGLE_LOT_CAPACITY * lotNo;
         }
         for (int key = lotStarted; key < lotEnded; key++) {
             if (!parkingLotData.containsKey(key)) {
