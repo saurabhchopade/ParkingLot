@@ -42,19 +42,19 @@ public class ParkingLot {
         vehicleStatus(true);
     }
 
-    public void UnPark(String vehicle) throws ParkingLotException {
-        if (!isMyVehiclePresent(vehicle)) {
-            throw new ParkingLotException(ExceptionType.NO_VEHICLE_PRESENT, "No such vehicle present");
+    public void unPark(String vehicle) throws ParkingLotException {
+        if (isMyVehiclePresent(vehicle)) {
         }
         int counter = 0;
         for (VehicleDetails t : parkingLotData.values()) {
             counter++;
             if (t.vehicleNumber == vehicle) {
                 parkingLotData.remove(counter);
-                break;
+                parkingLotObserver.notificationUpdate(false);
+                vehicleStatus(false);
             }
+            break;
         }
-        parkingLotObserver.notificationUpdate(false);
     }
 
     private void vehicleStatus(boolean status) {
