@@ -7,6 +7,7 @@ import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +102,7 @@ public class ParkingLot {
         throw new ParkingLotException(ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
 
+
     private boolean checkPresent(VehicleDetails vehicle) {
         for (VehicleDetails t : parkingLotData.values()) {
             if (t.vehicleNumber.equals(vehicle.vehicleNumber)) {
@@ -110,7 +112,7 @@ public class ParkingLot {
         return false;
     }
 
-    public LocalTime vehicleArrivedTime(String givenCarName) throws ParkingLotException {
+    public LocalDateTime vehicleArrivedTime(String givenCarName) throws ParkingLotException {
         for (VehicleDetails t : parkingLotData.values()) {
             if (t.vehicleNumber.equals(givenCarName)) {
                 return t.vehicleParkingTime;

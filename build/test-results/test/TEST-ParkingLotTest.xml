@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2020-07-22T09:04:11" hostname="saurabh3250" time="0.045">
+<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-07-23T03:51:13" hostname="saurabh3250" time="7.196">
   <properties/>
-  <testcase name="givenAVehicle_IfNotPresentAndWantToUnParke_ShouldHandleException" classname="ParkingLotTest" time="0.011"/>
-  <testcase name="givenVehicle_IfDriverTypeIsHandicap_ShouldParkToNearestLot" classname="ParkingLotTest" time="0.001"/>
-  <testcase name="givenVehicle_IfAlreadyPresent_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicleDetails_IfVehicleIsNotParkedWhileCheckingForVehicleTiming_ShouldReturnHandleException" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicleDetails_IfVehicleNotPresent_ShouldAllocateLotsEvenly" classname="ParkingLotTest" time="0.001"/>
-  <testcase name="givenVehicle_IfSpaceIsAvailable_ShouldReturnParkingLotNumberNo" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfParked_ShouldReturnParkingLotNumber" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_IfParkingLotIsFull_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicleDetails_IfVehicleAlreadyParked_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
-  <testcase name="givenVehicleDetails_IfVehicleIsParkedAlready_ShouldReturnParkingTime" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_IfParkingLotNowAvailable_ShouldReturnFalse" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_AlreadyParkedAndWantsToAllocateLot_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
-  <testcase name="givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenAVehicle_IfParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.0"/>
-  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
-  <testcase name="givenAVehicle_IfUnParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.022"/>
+  <testcase name="givenVehicleDetails_IfVehicleIsNotParkedWhileCheckingForVehicleTiming_ShouldReturnHandleException" classname="ParkingLotTest" time="7.196"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
