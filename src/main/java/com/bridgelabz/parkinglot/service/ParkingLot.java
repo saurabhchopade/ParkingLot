@@ -8,7 +8,6 @@ import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 public class ParkingLot {
@@ -16,20 +15,18 @@ public class ParkingLot {
     public final int TOTAL_PARKING_LOT_CAPACITY;
     private final int TOTAL_LOTS;
     private final int SINGLE_LOT_CAPACITY;
-    private final int singleLotCapacity;
-    public static boolean status;
-    private static Integer lotNo = 1;
+    public static boolean LatestVehicleStatus;
+    private int lotNo = 1;
     ParkingLotObserver parkingLotObserver = new ParkingLotObserver();
 
     public ParkingLot(int parkingLotCapacity, int noOfLots) {
         this.TOTAL_LOTS = noOfLots;
         this.TOTAL_PARKING_LOT_CAPACITY = parkingLotCapacity * noOfLots;
         this.SINGLE_LOT_CAPACITY = parkingLotCapacity;
-        this.singleLotCapacity = parkingLotCapacity;
         ParkingOwnerImpl parkingOwner = new ParkingOwnerImpl();
-        parkingLotObserver.addIntoViewerList(parkingOwner);
         AirportSecurityImpl airportSecurity = new AirportSecurityImpl();
-        parkingLotObserver.addIntoViewerList(airportSecurity);
+        parkingLotObserver.registerForStatus(parkingOwner);
+        parkingLotObserver.registerForStatus(airportSecurity);
     }
 
     public void park(VehicleDetails vehicle) throws ParkingLotException {
@@ -59,7 +56,7 @@ public class ParkingLot {
     }
 
     private void vehicleStatus(boolean status) {
-        ParkingLot.status = status;
+        ParkingLot.LatestVehicleStatus = status;
     }
 
     public void allocateLotNo(VehicleDetails vehicle) throws ParkingLotException {
@@ -72,19 +69,20 @@ public class ParkingLot {
             lotStarted = 1;
             lotEnded = TOTAL_PARKING_LOT_CAPACITY;
         } else {
-            lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (singleLotCapacity - 1);
+            lotStarted = (SINGLE_LOT_CAPACITY * lotNo) - (SINGLE_LOT_CAPACITY - 1);
             lotEnded = SINGLE_LOT_CAPACITY * lotNo;
         }
-        for (int key = lotStarted; key < lotEnded; key++) {
-            if (!parkingLotData.containsKey(key)) {
-                this.parkThroughWarden(key, vehicle);
+        for (int slotNo = lotStarted; slotNo < lotEnded; slotNo++) {
+            if (!parkingLotData.containsKey(slotNo)) {
+                this.parkThroughAttendant(slotNo, vehicle);
                 break;
             }
         }
     }
 
-    private void parkThroughWarden(int key, VehicleDetails vehicle) {
-        parkingLotData.putIfAbsent(key, vehicle);
+    public void parkThroughAttendant(int slotNo, VehicleDetails vehicle) {
+        ParkingOwnerImpl.lotNoForCar(lotNo);
+        parkingLotData.putIfAbsent(slotNo, vehicle);
         if (vehicle.driverType == DriverType.NON_HANDICAP_DRIVER) {
             lotNo++;
         }
@@ -94,28 +92,22 @@ public class ParkingLot {
     }
 
     public boolean isMyVehiclePresent(String vehicleNumber) throws ParkingLotException {
-        for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber.equals(vehicleNumber)) {
+        for (VehicleDetails vehicleDetails : parkingLotData.values()) {
+            if (vehicleDetails.vehicleNumber.equals(vehicleNumber)) {
                 return true;
             }
         }
         throw new ParkingLotException(ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
 
-
     private boolean checkPresent(VehicleDetails vehicle) {
-        for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber.equals(vehicle.vehicleNumber)) {
-                return true;
-            }
-        }
-        return false;
+        return parkingLotData.values().stream().anyMatch(vehicleDetails -> vehicleDetails.vehicleNumber.equals(vehicle.vehicleNumber));
     }
 
     public LocalDateTime vehicleArrivedTime(String givenCarName) throws ParkingLotException {
-        for (VehicleDetails t : parkingLotData.values()) {
-            if (t.vehicleNumber.equals(givenCarName)) {
-                return t.vehicleParkingTime;
+        for (VehicleDetails vehicleDetails : parkingLotData.values()) {
+            if (vehicleDetails.vehicleNumber.equals(givenCarName)) {
+                return vehicleDetails.vehicleParkingTime;
             }
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");

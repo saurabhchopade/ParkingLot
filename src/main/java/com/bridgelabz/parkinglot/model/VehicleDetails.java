@@ -2,7 +2,6 @@ package com.bridgelabz.parkinglot.model;
 import com.bridgelabz.parkinglot.enums.DriverType;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 public class VehicleDetails {
     public LocalDateTime vehicleParkingTime;
     public String vehicleNumber;
