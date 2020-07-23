@@ -37,7 +37,7 @@ public class ParkingLot {
             parkingLotObserver.notificationUpdate(true);
             throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
         }
-        this.allocateLotNo(vehicle);
+        this.parkThroughAttendant(vehicle);
         vehicleStatus(true);
     }
 
@@ -59,7 +59,7 @@ public class ParkingLot {
         ParkingLot.LatestVehicleStatus = status;
     }
 
-    public void allocateLotNo(VehicleDetails vehicle) throws ParkingLotException {
+    public int allocateAvailableLot(VehicleDetails vehicle) throws ParkingLotException {
         if (this.checkPresent(vehicle)) {
             throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
         }
@@ -74,13 +74,14 @@ public class ParkingLot {
         }
         for (int slotNo = lotStarted; slotNo < lotEnded; slotNo++) {
             if (!parkingLotData.containsKey(slotNo)) {
-                this.parkThroughAttendant(slotNo, vehicle);
-                break;
+                return slotNo;
             }
         }
+        throw new ParkingLotException(ExceptionType.VEHICLE_ALREADY_PARKED, "This vehicle already parked");
     }
 
-    public void parkThroughAttendant(int slotNo, VehicleDetails vehicle) {
+    public void parkThroughAttendant(VehicleDetails vehicle) throws ParkingLotException {
+        int slotNo = allocateAvailableLot(vehicle);
         ParkingOwnerImpl.lotNoForCar(lotNo);
         parkingLotData.putIfAbsent(slotNo, vehicle);
         if (vehicle.driverType == DriverType.NON_HANDICAP_DRIVER) {
