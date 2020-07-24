@@ -75,12 +75,13 @@ public class ParkingLot {
                 lotEnded = SINGLE_LOT_CAPACITY * lotNo;
                 break;
         }
-        for (int slotNo = lotStarted; slotNo < lotEnded; slotNo++) {
+        for (int slotNo = lotStarted; slotNo <= lotEnded; slotNo++) {
             if (!parkingLotData.containsKey(slotNo)) {
                 return slotNo;
             }
         }
-        throw new ParkingLotException(ExceptionType.PARKING_LOT_IS_FULL, "Parking lot is full");
+        lotNo++;
+        return this.allocateAvailableLot(vehicle);
     }
 
     public void parkingLot(slotDetails vehicle) throws ParkingLotException {
