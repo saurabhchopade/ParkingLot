@@ -1,6 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.enums.VehicleColor;
+import com.bridgelabz.parkinglot.enums.VehicleMake;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
@@ -130,6 +131,11 @@ public class ParkingLot {
     public List<Integer> FindVehicleLocationsByColor(VehicleColor color) {
         return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleColor,
                 color)).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+
+    public Map<Integer, ParkingSlotDetails> findVehicleDetailsByColorAndMake(VehicleColor color, VehicleMake make) {
+        return parkingLotData.entrySet().stream().
+                filter(entry -> Objects.equals(entry.getValue().vehicleColor, color) && Objects.equals(entry.getValue().vehicleMake, make)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
 
