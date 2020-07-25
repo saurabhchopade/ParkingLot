@@ -1,5 +1,6 @@
 package com.bridgelabz.parkinglot.service;
 import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleColor;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
@@ -10,7 +11,10 @@ import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 public class ParkingLot {
     Map<Integer, ParkingSlotDetails> parkingLotData = new HashMap<>();
     public final int TOTAL_PARKING_LOT_CAPACITY;
@@ -121,6 +125,11 @@ public class ParkingLot {
             }
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
+    }
+
+    public List<Integer> FindVehicleLocationsByColor(VehicleColor color) {
+        return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleColor,
+                color)).map(Map.Entry::getKey).collect(Collectors.toList());
     }
 }
 
