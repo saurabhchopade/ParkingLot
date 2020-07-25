@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-07-25T16:22:35" hostname="saurabh3250" time="0.046">
+<testsuite name="ParkingLotTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-07-25T20:52:37" hostname="saurabh3250" time="39.445">
   <properties/>
-  <testcase name="givenRequestToGetWhiteVehicle_IfFound_ShouldReturnListWhichContainsSlotNumbers" classname="ParkingLotTest" time="0.046"/>
+  <testcase name="givenRequestForInformation_IfFind_ShouldReturnListBasedOnParameters" classname="ParkingLotTest" time="39.445">
+    <skipped/>
+  </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
