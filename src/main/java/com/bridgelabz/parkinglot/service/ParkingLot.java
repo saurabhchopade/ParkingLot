@@ -1,5 +1,6 @@
 package com.bridgelabz.parkinglot.service;
 import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.exception.ParkingLotException.ExceptionType;
 import com.bridgelabz.parkinglot.model.parkingSpotDetails;
@@ -10,7 +11,7 @@ import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-public class ParkingLotSystem {
+public class ParkingLot {
     Map<Integer, parkingSpotDetails> parkingLotData = new HashMap<>();
     public final int TOTAL_PARKING_LOT_CAPACITY;
     private final int TOTAL_LOTS;
@@ -19,7 +20,7 @@ public class ParkingLotSystem {
     private int lotNo = 1;
     ParkingLotObserver parkingLotObserver = new ParkingLotObserver();
 
-    public ParkingLotSystem(int parkingLotCapacity, int noOfLots) {
+    public ParkingLot(int parkingLotCapacity, int noOfLots) {
         this.TOTAL_LOTS = noOfLots;
         this.TOTAL_PARKING_LOT_CAPACITY = parkingLotCapacity * noOfLots;
         this.SINGLE_LOT_CAPACITY = parkingLotCapacity;
@@ -50,13 +51,13 @@ public class ParkingLotSystem {
                 parkingLotData.remove(counter);
                 parkingLotObserver.notificationUpdate(false);
                 vehicleStatus(false);
+                break;
             }
-            break;
         }
     }
 
     private void vehicleStatus(boolean status) {
-        ParkingLotSystem.LatestVehicleStatus = status;
+        ParkingLot.LatestVehicleStatus = status;
     }
 
     public int allocateAvailableLot(parkingSpotDetails vehicle) throws ParkingLotException {
@@ -76,7 +77,11 @@ public class ParkingLotSystem {
                 break;
         }
         for (int slotNo = lotStarted; slotNo <= lotEnded; slotNo++) {
-            if (!parkingLotData.containsKey(slotNo)) {
+            if (vehicle.vehicleSize == VehicleSize.LARGE) {
+                if (!parkingLotData.containsKey(slotNo) && !parkingLotData.containsKey(slotNo + 1)) {
+                    return slotNo;
+                }
+            } else if (!parkingLotData.containsKey(slotNo)) {
                 return slotNo;
             }
         }
