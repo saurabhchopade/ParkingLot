@@ -10,6 +10,7 @@ import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -153,6 +154,17 @@ public class ParkingLot {
         if (vehicleList.size() == 0) {
             throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
         }
+        return vehicleList;
+    }
+
+    public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) {
+        List<Integer> vehicleList = parkingLotData.entrySet().stream().filter(entry -> {
+            Duration duration = Duration.between(entry.getValue().vehicleParkingTime, LocalDateTime.now());
+            if (duration.toMinutes() < minutes) {
+                return true;
+            }
+            return false;
+        }).map(Map.Entry::getKey).collect(Collectors.toList());
         return vehicleList;
     }
 }
