@@ -113,12 +113,9 @@ public class ParkingLot {
     }
 
     public LocalDateTime vehicleArrivedTime(String givenCarName) throws ParkingLotException {
-        for (ParkingSlotDetails ParkingSlotDetails : parkingLotData.values()) {
-            if (ParkingSlotDetails.vehicleNumber.equals(givenCarName)) {
-                return ParkingSlotDetails.vehicleParkingTime;
-            }
-        }
-        throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
+        isMyVehiclePresent(givenCarName);
+        return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleNumber,
+                givenCarName)).map(entry -> entry.getValue().vehicleParkingTime).findFirst().orElse(null);
     }
 
     public List<Integer> getVehicleLocationsByColor(VehicleColor color) throws ParkingLotException {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-07-26T18:57:16" hostname="saurabh3250" time="27.085">
+<testsuite name="ParkingLotTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-07-26T19:12:50" hostname="saurabh3250" time="26.186">
   <properties/>
-  <testcase name="name" classname="ParkingLotTest" time="27.085"/>
+  <testcase name="givenVehicleDetails_IfVehicleIsParkedAlready_ShouldReturnParkingTime" classname="ParkingLotTest" time="26.186">
+    <skipped/>
+  </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
