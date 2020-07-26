@@ -125,18 +125,35 @@ public class ParkingLot {
         throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
     }
 
-    public List<Integer> getVehicleLocationsByColor(VehicleColor color) {
-        return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleColor,
-                color)).map(Map.Entry::getKey).collect(Collectors.toList());
+    public List<Integer> getVehicleLocationsByColor(VehicleColor color) throws ParkingLotException {
+        List<Integer> vehicleList = parkingLotData.entrySet().stream().
+                filter(entry -> Objects.equals(entry.getValue().vehicleColor, color)).map(Map.Entry::getKey).
+                collect(Collectors.toList());
+        if (vehicleList.size() == 0) {
+            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
+        }
+        return vehicleList;
     }
 
-    public Map<Integer, ParkingSlotDetails> getVehicleDetailsByColorAndMake(VehicleColor color, VehicleMake make) {
-        return parkingLotData.entrySet().stream().
-                filter(entry -> Objects.equals(entry.getValue().vehicleColor, color) && Objects.equals(entry.getValue().vehicleMake, make)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public Map<Integer, ParkingSlotDetails> getVehicleDetailsByColorAndMake(VehicleColor color, VehicleMake make) throws ParkingLotException {
+        Map<Integer,ParkingSlotDetails> vehicleDetails=parkingLotData.entrySet().stream().
+                filter(entry -> Objects.equals(entry.getValue().vehicleColor, color) && Objects.equals(entry.getValue().vehicleMake, make)).
+                collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (vehicleDetails.size()==0)
+        {
+            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
+        }
+        return vehicleDetails;
     }
 
-    public List<Integer> getVehicleDetailsByMake(VehicleMake make) {
-        return parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleMake, make)).map(Map.Entry::getKey).collect(Collectors.toList());
+    public List<Integer> getVehicleDetailsByMake(VehicleMake make) throws ParkingLotException {
+        List<Integer> vehicleList = parkingLotData.entrySet().stream().
+                filter(entry -> Objects.equals(entry.getValue().vehicleMake, make)).map(Map.Entry::getKey).
+                collect(Collectors.toList());
+        if (vehicleList.size() == 0) {
+            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
+        }
+        return vehicleList;
     }
 }
 
