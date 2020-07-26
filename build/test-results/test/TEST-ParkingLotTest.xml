@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ParkingLotTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-07-25T20:52:37" hostname="saurabh3250" time="39.445">
+<testsuite name="ParkingLotTest" tests="25" skipped="0" failures="0" errors="0" timestamp="2020-07-26T05:53:46" hostname="saurabh3250" time="0.092">
   <properties/>
-  <testcase name="givenRequestForInformation_IfFind_ShouldReturnListBasedOnParameters" classname="ParkingLotTest" time="39.445">
-    <skipped/>
-  </testcase>
+  <testcase name="givenRequestToGetWhiteVehicleLocations_IfVehicleFound_ShouldReturnListWhichContainsSlotNumbers" classname="ParkingLotTest" time="0.021"/>
+  <testcase name="givenAVehicle_IfNotPresentAndWantToUnParke_ShouldHandleException" classname="ParkingLotTest" time="0.002"/>
+  <testcase name="givenRequestToGetWhiteVehicleLocations_IfSuchTypeOfVehicleNotFound_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfVehicleSizeIsLarge_ShouldAllocateHighestFreeSpace" classname="ParkingLotTest" time="0.003"/>
+  <testcase name="givenRequestBasedOnColorAndMake_IfVehicleNotFound_ShouldHandleException" classname="ParkingLotTest" time="0.005"/>
+  <testcase name="givenVehicle_IfVehicleDriverTypeIsHandicap_ShouldParkToNearestLot" classname="ParkingLotTest" time="0.003"/>
+  <testcase name="givenVehicle_IfDriverTypeIsHandicap_ShouldParkToNearestLot" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfAlreadyPresent_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicleDetails_IfVehicleIsNotParkedWhileCheckingForVehicleTiming_ShouldReturnHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicleDetails_IfVehicleParked_ShouldParkEvenly" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenRequestToGetVehicleInfoByMake_IfVehicleFound_ShouldReturnDetailsOfThatVehicle" classname="ParkingLotTest" time="0.003"/>
+  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfParked_ShouldReturnParkingLotNumber" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenRequestBasedOnColorAndMake_IfVehicleFound_ShouldReturnMapOfDetails" classname="ParkingLotTest" time="0.002"/>
+  <testcase name="givenVehicle_IfSpaceIsAvailable_ShouldUpdateParkingLotNumberNoToOwner" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfParkingLotIsFull_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException" classname="ParkingLotTest" time="0.003"/>
+  <testcase name="givenVehicleDetails_IfVehicleAlreadyParked_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicleDetails_IfVehicleIsParkedAlready_ShouldReturnParkingTime" classname="ParkingLotTest" time="0.009"/>
+  <testcase name="givenVehicle_IfParkingLotNowAvailable_ShouldReturnFalse" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_AlreadyParkedAndWantsToAllocateLot_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenRequestToGetVehicleInfoByMake_IfVehicleNotFound_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenAVehicle_IfUnParked_ShouldReturnFalse" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_IfParkingLotIsFullInformToAirportSecurity_ShouldHandleException" classname="ParkingLotTest" time="0.004"/>
+  <testcase name="givenAVehicle_IfParked_ShouldReturnTrue" classname="ParkingLotTest" time="0.001"/>
+  <testcase name="givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException" classname="ParkingLotTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -5,7 +5,6 @@ import com.bridgelabz.parkinglot.enums.VehicleMake;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 public class ParkingSlotDetails {
     public LocalDateTime vehicleParkingTime;
     public String vehicleNumber;
@@ -22,16 +21,5 @@ public class ParkingSlotDetails {
         this.driverType = driverType;
         this.vehicleColor = vehicleColor;
         this.vehicleMake = vehicleMake;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        ParkingSlotDetails that = (ParkingSlotDetails) o;
-        return Objects.equals(vehicleParkingTime, that.vehicleParkingTime) && Objects.equals(vehicleNumber,
-                that.vehicleNumber) && vehicleSize == that.vehicleSize && driverType == that.driverType && vehicleColor == that.vehicleColor;
     }
 }
