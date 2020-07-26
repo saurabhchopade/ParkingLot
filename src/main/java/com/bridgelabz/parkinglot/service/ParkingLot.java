@@ -127,45 +127,53 @@ public class ParkingLot {
     }
 
     public List<Integer> getVehicleLocationsByColor(VehicleColor color) throws ParkingLotException {
-        List<Integer> vehicleList = parkingLotData.entrySet().stream().
+        List<Integer> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleColor, color)).map(Map.Entry::getKey).
                 collect(Collectors.toList());
-        if (vehicleList.size() == 0) {
+        if (listOfDetails.size() == 0) {
             throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
         }
-        return vehicleList;
+        return listOfDetails;
     }
 
     public Map<Integer, ParkingSlotDetails> getVehicleDetailsByColorAndMake(VehicleColor color, VehicleMake make) throws ParkingLotException {
-        Map<Integer,ParkingSlotDetails> vehicleDetails=parkingLotData.entrySet().stream().
+        Map<Integer, ParkingSlotDetails> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleColor, color) && Objects.equals(entry.getValue().vehicleMake, make)).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        if (vehicleDetails.size()==0)
-        {
+        if (listOfDetails.size() == 0) {
             throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
         }
-        return vehicleDetails;
+        return listOfDetails;
     }
 
     public List<Integer> getVehicleDetailsByMake(VehicleMake make) throws ParkingLotException {
-        List<Integer> vehicleList = parkingLotData.entrySet().stream().
+        List<Integer> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleMake, make)).map(Map.Entry::getKey).
                 collect(Collectors.toList());
-        if (vehicleList.size() == 0) {
+        if (listOfDetails.size() == 0) {
             throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
         }
-        return vehicleList;
+        return listOfDetails;
     }
 
-    public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) {
-        List<Integer> vehicleList = parkingLotData.entrySet().stream().filter(entry -> {
+    public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) throws ParkingLotException {
+        return parkingLotData.entrySet().stream().filter(entry -> {
             Duration duration = Duration.between(entry.getValue().vehicleParkingTime, LocalDateTime.now());
-            if (duration.toMinutes() < minutes) {
-                return true;
+            return duration.toMinutes() < minutes;
+        }).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+
+    public Map<Integer, ParkingSlotDetails> giveVehicleDetailsBySizeAndDriverType(int rowNumber) throws ParkingLotException {
+        Map<Integer, ParkingSlotDetails> listOfDetails = parkingLotData.entrySet().stream().filter(entry -> {
+            if (entry.getValue().vehicleSize == VehicleSize.SMALL && entry.getValue().driverType == DriverType.HANDICAP_DRIVER) {
+                return ((rowNumber * SINGLE_LOT_CAPACITY) - SINGLE_LOT_CAPACITY) < entry.getKey() && entry.getKey() <= (rowNumber * SINGLE_LOT_CAPACITY);
             }
             return false;
-        }).map(Map.Entry::getKey).collect(Collectors.toList());
-        return vehicleList;
+        }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (listOfDetails.size() == 0) {
+            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
+        }
+        return listOfDetails;
     }
 }
 
