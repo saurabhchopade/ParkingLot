@@ -50,16 +50,11 @@ public class ParkingLot {
 
     public void unPark(String vehicle) throws ParkingLotException {
         isMyVehiclePresent(vehicle);
-        int counter = 0;
-        for (ParkingSlotDetails t : parkingLotData.values()) {
-            counter++;
-            if (t.vehicleNumber.equals(vehicle)) {
-                parkingLotData.remove(counter);
-                parkingLotObserver.notificationUpdate(false);
-                vehicleStatus(false);
-                break;
-            }
-        }
+        Integer key = parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleNumber,
+                        vehicle)).map(Map.Entry::getKey).findFirst().orElse(null);
+        parkingLotData.remove(key);
+        parkingLotObserver.notificationUpdate(false);
+        vehicleStatus(false);
     }
 
     private void vehicleStatus(boolean status) {
@@ -156,7 +151,7 @@ public class ParkingLot {
         return listOfDetails;
     }
 
-    public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) throws ParkingLotException {
+    public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) {
         return parkingLotData.entrySet().stream().filter(entry -> {
             Duration duration = Duration.between(entry.getValue().vehicleParkingTime, LocalDateTime.now());
             return duration.toMinutes() < minutes;
