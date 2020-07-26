@@ -175,6 +175,10 @@ public class ParkingLot {
         }
         return listOfDetails;
     }
+
+    public Map<Integer, ParkingSlotDetails> giveAllVehicleDetails() {
+        return parkingLotData;
+    }
 }
 
 
