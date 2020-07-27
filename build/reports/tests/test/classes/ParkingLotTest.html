@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">16</div>
+<div class="counter">29</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.019s</div>
+<div class="counter">0.152s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,57 +76,112 @@
 </thead>
 <tr>
 <td class="success">givenAVehicle_IfNotPresentAndWantToUnParke_ShouldHandleException</td>
-<td class="success">0.013s</td>
+<td class="success">0.012s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenAVehicle_IfParked_ShouldReturnTrue</td>
-<td class="success">0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">givenAVehicle_IfUnParked_ShouldReturnTrue</td>
 <td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
+<td class="success">givenAVehicle_IfUnParked_ShouldReturnFalse</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestBasedOnColorAndMake_IfVehicleFound_ShouldReturnMapOfDetails</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestBasedOnColorAndMake_IfVehicleNotFound_ShouldHandleException</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetAllSmallHandicapVehicleFromRowSelected_IfVehicleFound_ShouldReturnAllDetails</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetAllSmallHandicapVehicleFromSelectedRow_IfVehicleNotFound_ShouldHandleException</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetAllVehicleDetails_IfVehiclesFound_ShouldReturnAllVehicleDetails</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetVehicleInfoByMake_IfVehicleFound_ShouldReturnDetailsOfThatVehicle</td>
+<td class="success">0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetVehicleInfoByMake_IfVehicleNotFound_ShouldHandleException</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetVehicleParkedInLastGivenMinutes_IfVehicleFound_ShouldReturnListOfVehicles</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetWhiteVehicleLocations_IfSuchTypeOfVehicleNotFound_ShouldHandleException</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenRequestToGetWhiteVehicleLocations_IfVehicleFound_ShouldReturnListWhichContainsSlotNumbers</td>
+<td class="success">0.025s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
 <td class="success">givenVehicleDetails_IfVehicleAlreadyParked_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicleDetails_IfVehicleIsNotParkedWhileCheckingForVehicleTiming_ShouldReturnHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicleDetails_IfVehicleIsParkedAlready_ShouldReturnParkingTime</td>
-<td class="success">0s</td>
+<td class="success">0.009s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">givenVehicleDetails_IfVehicleNotPresent_ShouldAllocateLotsEvenly</td>
-<td class="success">0.001s</td>
+<td class="success">givenVehicleDetails_IfVehicleParked_ShouldParkEvenly</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_AlreadyParkedAndWantsToAllocateLot_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_CheckVehiclePresentOrNotIfNotParked_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_CheckVehiclePresentOrNotIfParked_ShouldReturnParkingLotNumber</td>
-<td class="success">0s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_IfAlreadyPresent_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenVehicle_IfDriverTypeIsHandicap_ShouldParkToNearestLot</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -136,22 +191,32 @@
 </tr>
 <tr>
 <td class="success">givenVehicle_IfParkingLotIsFullInformToOwner_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_IfParkingLotIsFull_ShouldHandleException</td>
-<td class="success">0s</td>
+<td class="success">0.005s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">givenVehicle_IfParkingLotNowAvailable_ShouldReturnFalse</td>
-<td class="success">0.001s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">givenVehicle_IfSpaceIsAvailable_ShouldReturnParkingLotNumberNo</td>
-<td class="success">0s</td>
+<td class="success">givenVehicle_IfSpaceIsAvailable_ShouldUpdateParkingLotNumberNoToOwner</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenVehicle_IfVehicleDriverTypeIsHandicap_ShouldParkToNearestLot</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">givenVehicle_IfVehicleSizeIsLarge_ShouldAllocateHighestFreeSpace</td>
+<td class="success">0.014s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -164,7 +229,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 6.1.1</a> at 22-Jul-2020, 12:53:23 PM</p>
+<a href="http://www.gradle.org">Gradle 6.1.1</a> at 27-Jul-2020, 9:01:25 AM</p>
 </div>
 </div>
 </body>

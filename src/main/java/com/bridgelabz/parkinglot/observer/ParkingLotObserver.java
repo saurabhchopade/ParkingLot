@@ -4,7 +4,7 @@ import java.util.List;
 public class ParkingLotObserver {
     private List<ParkingObserver> statusObservers = new ArrayList<>();
 
-    public void addIntoViewerList(ParkingObserver viewer) {
+    public void registerForStatus(ParkingObserver viewer) {
         statusObservers.add(viewer);
     }
 
