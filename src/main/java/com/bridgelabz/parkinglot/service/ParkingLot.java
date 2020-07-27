@@ -9,6 +9,7 @@ import com.bridgelabz.parkinglot.model.ParkingSlotDetails;
 import com.bridgelabz.parkinglot.observer.AirportSecurityImpl;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 import com.bridgelabz.parkinglot.observer.ParkingOwnerImpl;
+import com.bridgelabz.parkinglot.utils.ExceptionUtil;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -50,16 +51,11 @@ public class ParkingLot {
 
     public void unPark(String vehicle) throws ParkingLotException {
         isMyVehiclePresent(vehicle);
-        int counter = 0;
-        for (ParkingSlotDetails t : parkingLotData.values()) {
-            counter++;
-            if (t.vehicleNumber.equals(vehicle)) {
-                parkingLotData.remove(counter);
-                parkingLotObserver.notificationUpdate(false);
-                vehicleStatus(false);
-                break;
-            }
-        }
+        Integer key = parkingLotData.entrySet().stream().filter(entry -> Objects.equals(entry.getValue().vehicleNumber,
+                        vehicle)).map(Map.Entry::getKey).findFirst().orElse(null);
+        parkingLotData.remove(key);
+        parkingLotObserver.notificationUpdate(false);
+        vehicleStatus(false);
     }
 
     private void vehicleStatus(boolean status) {
@@ -114,25 +110,22 @@ public class ParkingLot {
     }
 
     private boolean isPresent(ParkingSlotDetails vehicle) {
-        return parkingLotData.values().stream().anyMatch(ParkingSlotDetails -> ParkingSlotDetails.vehicleNumber.equals(vehicle.vehicleNumber));
+        return parkingLotData.values().stream().anyMatch(ParkingSlotDetails -> ParkingSlotDetails.vehicleNumber.
+                equals(vehicle.vehicleNumber));
     }
 
     public LocalDateTime vehicleArrivedTime(String givenCarName) throws ParkingLotException {
-        for (ParkingSlotDetails ParkingSlotDetails : parkingLotData.values()) {
-            if (ParkingSlotDetails.vehicleNumber.equals(givenCarName)) {
-                return ParkingSlotDetails.vehicleParkingTime;
-            }
-        }
-        throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_PARKED, "Vehicle Not present");
+        isMyVehiclePresent(givenCarName);
+        return parkingLotData.values().stream().filter(parkingSlotDetails -> Objects.equals(parkingSlotDetails.
+                vehicleNumber, givenCarName)).map(parkingSlotDetails -> parkingSlotDetails.vehicleParkingTime).
+                findFirst().orElse(null);
     }
 
     public List<Integer> getVehicleLocationsByColor(VehicleColor color) throws ParkingLotException {
         List<Integer> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleColor, color)).map(Map.Entry::getKey).
                 collect(Collectors.toList());
-        if (listOfDetails.size() == 0) {
-            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
-        }
+        ExceptionUtil.listException(listOfDetails);
         return listOfDetails;
     }
 
@@ -140,9 +133,7 @@ public class ParkingLot {
         Map<Integer, ParkingSlotDetails> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleColor, color) && Objects.equals(entry.getValue().vehicleMake, make)).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        if (listOfDetails.size() == 0) {
-            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
-        }
+        ExceptionUtil.mapException(listOfDetails);
         return listOfDetails;
     }
 
@@ -150,17 +141,17 @@ public class ParkingLot {
         List<Integer> listOfDetails = parkingLotData.entrySet().stream().
                 filter(entry -> Objects.equals(entry.getValue().vehicleMake, make)).map(Map.Entry::getKey).
                 collect(Collectors.toList());
-        if (listOfDetails.size() == 0) {
-            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
-        }
+        ExceptionUtil.listException(listOfDetails);
         return listOfDetails;
     }
 
     public List<Integer> giveVehiclesParkedInLast30minutes(int minutes) throws ParkingLotException {
-        return parkingLotData.entrySet().stream().filter(entry -> {
+        List<Integer> listOfDetails = parkingLotData.entrySet().stream().filter(entry -> {
             Duration duration = Duration.between(entry.getValue().vehicleParkingTime, LocalDateTime.now());
             return duration.toMinutes() < minutes;
         }).map(Map.Entry::getKey).collect(Collectors.toList());
+        ExceptionUtil.listException(listOfDetails);
+        return listOfDetails;
     }
 
     public Map<Integer, ParkingSlotDetails> giveVehicleDetailsBySizeAndDriverType(int rowNumber) throws ParkingLotException {
@@ -170,10 +161,12 @@ public class ParkingLot {
             }
             return false;
         }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        if (listOfDetails.size() == 0) {
-            throw new ParkingLotException(ExceptionType.NO_SUCHTYPE_VEHICLEFOUND, "No such type of vehicle present");
-        }
+        ExceptionUtil.mapException(listOfDetails);
         return listOfDetails;
+    }
+
+    public Map<Integer, ParkingSlotDetails> giveAllVehicleDetails() {
+        return parkingLotData;
     }
 }
 
